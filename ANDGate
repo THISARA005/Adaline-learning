@@ -1,0 +1,82 @@
+import numpy as np
+import random
+
+#get inputs for x0
+input0 = np.array([-1,-1,-1,-1]);
+
+#get inputs for x1 and x2
+input1=np.array([-1,1]);
+
+#get random value for the leraning rate
+n=random.uniform(0.2,0.5);
+
+#get initial random values for the weight values w0,w1 and w2
+w0=random.random();
+w1=random.random();
+w2=random.random();
+#rounded weighted values for 2 floated points.
+w0=round(w0,2);
+w1=round(w1,2);
+w2=round(w2,2);
+
+#train the nueron, 200 times 
+for j in range(100):
+  x0=-1;
+  x1=random.choice(input1);
+  x2=random.choice(input1);
+
+  w0=round(w0,2);
+  w1=round(w1,2);
+  w2=round(w2,2);
+
+#calculate the predicted value
+  predValue=x0*w0+x1*w1+x2*w2;
+ 
+  #correct the weighted values with error correction
+  if ((x1==-1 and x2==-1) or (x1==-1 and x2==1) or (x1==1 and x2==-1)) and predValue>=0 :
+    desiValue=0;
+    w0=w0+n*(desiValue-predValue)*x0;
+    w1=w1+n*(desiValue-predValue)*x1;
+    w2=w2+n*(desiValue-predValue)*x2;
+  if (x1==1 and x2==1) and predValue<0:
+    desiValue=1;
+    w0=w0+n*(desiValue-predValue)*x0;
+    w1=w1+n*(desiValue-predValue)*x1;
+    w2=w2+n*(desiValue-predValue)*x2;
+  else:
+    desiValue=predValue;
+    w0=w0+n*(desiValue-predValue)*x0;
+    w1=w1+n*(desiValue-predValue)*x1;
+    w2=w2+n*(desiValue-predValue)*x2;
+  
+#after training the nueron get the random input for x1 and x2
+x1=random.choice(input1);
+x2=random.choice(input1);
+
+#after the training this is the best values for the weight values
+w0=round(w0,2);
+w1=round(w1,2);
+w2=round(w2,2);
+
+#print the inputs
+print(x1,x2);
+
+#calculate the predicted value
+predictedValue=w0*x0+w1*x1+w2*x2;
+if(predictedValue>=0):
+  predictedValue=1;
+if(predictedValue<0):
+  predictedValue=-1;
+
+#check whether the prediction is succesfull or not
+if ((x1==-1 and x2==-1) or (x1==-1 and x2==1) or (x1==1 and x2==-1)) and predictedValue==-1 :
+    print(predictedValue)
+    print("prediction was succesfull");
+if (x1==1 and x2==1) and predictedValue==1:
+    print(predictedValue)
+    print("prediction was succesfull");
+if (((x1==-1 and x2==-1) or (x1==-1 and x2==1) or (x1==1 and x2==-1)) and predictedValue==1) or ((x1==1 and x2==1) and predictedValue==-1):
+    print(predictedValue)
+    print("prediction was *****unsuccesfull");
+  
+
